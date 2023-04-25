@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>CSS3 Loading Spinner</title>
+
+  
+<style>
+  html, body {
+  height: 100%;
+}
+
+body {
+  align-items: center;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+}
+
+.loader  {
+  animation: rotate 1s infinite;  
+  height: 50px;
+  width: 50px;
+}
+
+.loader:before,
+.loader:after {   
+  border-radius: 50%;
+  content: '';
+  display: block;
+  height: 20px;  
+  width: 20px;
+}
+.loader:before {
+  animation: ball1 1s infinite;  
+  background-color: #000000;
+  box-shadow: 30px 0 0 #f8b334;
+  margin-bottom: 10px;
+}
+.loader:after {
+  animation: ball2 1s infinite; 
+  background-color: #f8b334;
+  box-shadow: 30px 0 0 #000000;
+}
+
+@keyframes rotate {
+  0% { 
+    -webkit-transform: rotate(0deg) scale(0.8); 
+    -moz-transform: rotate(0deg) scale(0.8);
+  }
+  50% { 
+    -webkit-transform: rotate(360deg) scale(1.2); 
+    -moz-transform: rotate(360deg) scale(1.2);
+  }
+  100% { 
+    -webkit-transform: rotate(720deg) scale(0.8); 
+    -moz-transform: rotate(720deg) scale(0.8);
+  }
+}
+
+@keyframes ball1 {
+  0% {
+    box-shadow: 30px 0 0 #f8b334;
+  }
+  50% {
+    box-shadow: 0 0 0 #f8b334;
+    margin-bottom: 0;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #f8b334;
+    margin-bottom: 10px;
+  }
+}
+
+@keyframes ball2 {
+  0% {
+    box-shadow: 30px 0 0 #000000;
+  }
+  50% {
+    box-shadow: 0 0 0 #000000;
+    margin-top: -20px;
+    -webkit-transform: translate(15px,15px);
+    -moz-transform: translate(15px, 15px);
+  }
+  100% {
+    box-shadow: 30px 0 0 #000000;
+    margin-top: 0;
+  }
+}
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.container{
+    width: 246px;
+    overflow: hidden;
+}
+.container .text{
+    position: relative;
+    color: #000000;
+    font-size: 30px;
+    font-weight: 600;
+}
+.container .text.first-text{
+    color: #FFF;
+}
+.text.sec-text:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    border-left: 2px solid #4070F4;
+    animation: animate 4s steps(12) infinite;
+}
+@keyframes animate{
+    40%, 60%{
+        left: calc(100% + 4px);
+    }
+    100%{
+        left: 0%;
+    }
+}
+.main {
+  position: absolute;
+  top: 350px;
+  font-size: 24px;
+}
+
+</style>
+
+
+</head>
+
+<body>
+  <div class="loader"></div>
+  <div class="container">
+      <span class="text first-text"></span>
+      <span class="text sec-text">Freelancer</span>
+  </div>
+
+  <script>
+      const text = document.querySelector(".sec-text");
+
+      const textLoad = () => {
+          setTimeout(() => {
+              text.textContent = "Freelancer";
+          }, 0);
+          setTimeout(() => {
+              text.textContent = "Blogger";
+          }, 4000);
+          setTimeout(() => {
+              text.textContent = "YouTuber";
+          }, 8000); //1s = 1000 milliseconds
+      }
+
+      textLoad();
+      setInterval(textLoad, 12000);
+  </script>
+  <div class="main">
+    <span class="mynew"></span>
+    <span class="mynewtwo"></span>
+  </div>
+
+  <script>
+    const texts = [
+      "im fine",
+      "thank you"
+    ];
+    const typingSpeed = 100; // typing speed in milliseconds
+    const pauseDuration = 2000; // pause duration between texts in milliseconds
+    let currentTextIndex = 0;
+    let currentCharacterIndex = 0;
+    let currentText = "";
+    const mynew = document.querySelector(".mynew");
+    const mynewtwo = document.querySelector(".mynewtwo");
+
+    function typeText() {
+      if (currentCharacterIndex < currentText.length) {
+        if (currentTextIndex === 0) {
+          mynew.textContent += currentText[currentCharacterIndex];
+        } else if (currentTextIndex === 1) {
+          mynewtwo.textContent += currentText[currentCharacterIndex];
+        }
+        currentCharacterIndex++;
+        setTimeout(typeText, typingSpeed);
+      } else {
+        setTimeout(eraseText, pauseDuration);
+      }
+    }
+
+    function eraseText() {
+      if (currentCharacterIndex > 0) {
+        if (currentTextIndex === 0) {
+          mynew.textContent = currentText.substring(0, currentCharacterIndex - 1);
+        } else if (currentTextIndex === 1) {
+          mynewtwo.textContent = currentText.substring(0, currentCharacterIndex - 1);
+        }
+        currentCharacterIndex--;
+        setTimeout(eraseText, typingSpeed);
+      } else {
+        currentTextIndex = (currentTextIndex + 1) % texts.length;
+        currentText = texts[currentTextIndex];
+        setTimeout(typeText, typingSpeed);
+      }
+    }
+
+    typeText(); // start typing animation
+  </script>
+    
+</body>
+
+</html>
